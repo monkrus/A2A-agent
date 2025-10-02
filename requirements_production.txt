@@ -1,0 +1,35 @@
+# Production requirements for A2A Agent
+
+# Core dependencies
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+google-generativeai==0.8.3
+python-dotenv==1.0.1
+requests==2.32.3
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.13.0
+
+# Validation
+pydantic==2.5.0
+
+# AP2 Protocol
+uv>=0.8.0
+git+https://github.com/google-agentic-commerce/AP2.git@main
+
+# Production dependencies
+# Rate limiting and security
+slowapi==0.1.9
+
+# Monitoring (optional, uncomment if needed)
+# prometheus-client==0.19.0
+# sentry-sdk==1.39.1
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Production server (alternative to uvicorn)
+# gunicorn==21.2.0

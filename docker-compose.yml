@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  agent:
+    build: .
+    container_name: a2a-agent-production
+    ports:
+      - "8000:8000"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - HOST=0.0.0.0
+      - PORT=8000
+      - BASE_URL=${BASE_URL:-http://localhost:8000}
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - LOG_LEVEL=INFO
+      - DATABASE_URL=sqlite:////app/data/agent.db
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:8000}
+      - RATE_LIMIT_PER_MINUTE=60
+    volumes:
+      - agent-data:/app/data
+      - agent-logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - agent-network
+
+  # Optional: PostgreSQL for production database
+  # Uncomment this section and update DATABASE_URL in agent service
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: a2a-agent-db
+  #   environment:
+  #     - POSTGRES_USER=agent
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRES_DB=agent_db
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - agent-network
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U agent"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+volumes:
+  agent-data:
+    driver: local
+  agent-logs:
+    driver: local
+  # postgres-data:
+  #   driver: local
+
+networks:
+  agent-network:
+    driver: bridge

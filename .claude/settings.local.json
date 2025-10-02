@@ -16,7 +16,16 @@
       "Bash(taskkill:*)",
       "Bash(git remote add:*)",
       "Bash(git add:*)",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "WebSearch",
+      "WebFetch(domain:ap2-protocol.org)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:medium.com)",
+      "Bash(uv pip install:*)",
+      "Bash(del C:UsersrobotDesktopmy-a2a-agentexplore_ap2.py)",
+      "Bash(del C:UsersrobotDesktopmy-a2a-agentexplore_mandates.py)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []
